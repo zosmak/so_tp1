@@ -1,9 +1,12 @@
 #include <stdio.h>
 
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[])
+{
 	// try to delete the file, sends an error if fails
 	if (remove(argv[1]) == 0)
-		printf("File deleted successfully"); 
+		printf("File deleted successfully\n");
 	else
 		perror("Error deleting the file");
+
+	return 0;
 }
