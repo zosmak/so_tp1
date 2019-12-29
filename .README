@@ -1,1 +1,12 @@
+-- ver discos
 fdisk -l
+
+-- escolher disco criado c
+fdisk /dev/sdx
+n -> create a new disk
+
+-- format the partition
+mkfs -t ext4 /dev/sdb1
+
+-- mount the partition
+mount /dev/sdb1 /new_storage
