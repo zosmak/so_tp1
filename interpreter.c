@@ -22,19 +22,19 @@ void stringSplit(char *input)
 	}
 }
 
-/* Execute a command */
+// execute a new command
 void execute()
 {
-	// Create a new process
+	// create a new process
 	int pid = fork();
 	if (pid != 0)
 	{
-		//the process has not yet been completed
+		// the process has not yet been completed
 		wait(NULL);
 	}
 	else
 	{
-		// execute the command, if -1 the command was unrecognized by the system
+		// execute the command, return only if error
 		if (execv(array[0], array) == -1)
 		{
 			// Display error message
