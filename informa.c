@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	if (stat(argv[1], &fileStat) < 0)
 	{
 		perror("Error reading the file");
-		return 1;
+		return 0;
 	}
 	else
 	{
@@ -33,5 +33,6 @@ int main(int argc, char *argv[])
 		printf("\t- Directory: %s \n", path);
 		printf("\t- Links: %d \n", fileStat.st_nlink);
 		printf("\t- i-node: %llu \n", fileStat.st_ino);
+		return 1;
 	}
 }

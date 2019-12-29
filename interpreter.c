@@ -8,28 +8,35 @@
 // declare array
 char *array[512];
 
-// divide input line into tokens
-void makeTokens(char *input)
+// split input on new lines
+void stringSplit(char *input)
 {
 	int i = 0;
-	char *token = strtok(input, "\n");
+	char *token = strtok(input, "\n ");
 	while (token != NULL)
 	{
-		// Add tokens into the array
+		// add tokens into the array
 		array[i++] = token;
-		token = strtok(NULL, "\n");
+		token = strtok(NULL, "\n ");
 	}
-	array[i] = NULL;
 }
 
 /* Execute a command */
 void execute()
 {
-	int pid = fork(); // Create a new process
+	int success = 1, ended = 1;
+
+	// Create a new process
+	int pid = fork();
 	if (pid != 0)
 	{
-		// already has a process, wait for it to end
+		//the process has not yet been completed
 		wait(NULL);
+		if (success)
+		{
+			printf("Terminou comando lista com código 1\n");
+			printf("%%");
+		}
 	}
 	else
 	{
@@ -37,7 +44,10 @@ void execute()
 		if (execv(array[0], array) == -1)
 		{
 			// Display error message
-			perror("Unrecognized command");
+			success = 0;
+			printf("Terminou comando lista com código 0\n");
+			printf("%%");
+			exit(EXIT_FAILURE);
 		}
 	}
 }
@@ -47,18 +57,31 @@ int main()
 	char *input = NULL;
 	size_t capline = 0;
 
+	// prints the first '%'
+	printf("%%");
+
 	while (1)
 	{
 		// Read the user input
-		printf("%%");
 		getline(&input, &capline, stdin);
 		// allow to continue when the user didn't right anything in the current line
-		if(strcmp(input,"\n")==0){
+		if (strcmp(input, "\n") == 0)
+		{
+			printf("%%");
 			continue;
 		}
 
-		// Divide line into tokens
-		makeTokens(input);
-		execute();
+		// split input on new lines
+		stringSplit(input);
+
+		// validate if command equals to termina
+		if (strcmp(array[0], "termina") == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			execute();
+		}
 	}
 }
