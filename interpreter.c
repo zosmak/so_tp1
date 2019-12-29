@@ -7,6 +7,7 @@
 
 // declare array
 char *array[512];
+int success = 1;
 
 // split input on new lines
 void stringSplit(char *input)
@@ -24,19 +25,12 @@ void stringSplit(char *input)
 /* Execute a command */
 void execute()
 {
-	int success = 1, ended = 1;
-
 	// Create a new process
 	int pid = fork();
 	if (pid != 0)
 	{
 		//the process has not yet been completed
 		wait(NULL);
-		if (success)
-		{
-			printf("Terminou comando lista com código 1\n");
-			printf("%%");
-		}
 	}
 	else
 	{
@@ -45,9 +39,6 @@ void execute()
 		{
 			// Display error message
 			success = 0;
-			printf("Terminou comando lista com código 0\n");
-			printf("%%");
-			exit(EXIT_FAILURE);
 		}
 	}
 }
@@ -81,7 +72,16 @@ int main()
 		}
 		else
 		{
+			success = 1;
 			execute();
+			if (success)
+			{
+				printf("\nTerminou comando lista com código 1\n%%");
+			}
+			else
+			{
+				printf("\nTerminou comando lista com código 0\n%%");
+			}
 		}
 	}
 }

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		read(file, str, sizeof(str));
-		write(1, str, sizeof(str));
+		printf("%s\n", str);
 		close(file);
 		return 1;
 	}
